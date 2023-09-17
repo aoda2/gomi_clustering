@@ -10,14 +10,13 @@ print(gomi_df)
 # モデル生成
 open_ai_model = OpenAIModel()
 
-# openai model を用いて embedding 化
-#gomi_df["embedding"] = gomi_df["品目名"].apply(lambda x: open_ai_model.convert_to_vector(x))
 
 embeddings = []
 for i, r in gomi_df.iterrows():
     if i % 20 == 0:
         print(i)
     try:
+        # openai model を用いて embedding 化
         embedding = open_ai_model.convert_to_vector(r["品目名"])
         embeddings.append(embedding)
         time.sleep(0.1)
