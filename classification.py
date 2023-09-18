@@ -6,6 +6,7 @@ from gomi_config import mode
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score
+import joblib
 
 # ファイル読み込み
 gomi_embedding = pd.read_csv(f"output/0133_20230307_embedding_{mode}.csv")
@@ -26,3 +27,5 @@ probas = clf.predict_proba(X_test)
 
 report = classification_report(y_test, preds)
 print(report)
+
+joblib.dump(clf, f"output/0133_20230307_model_{mode}.joblib")
