@@ -20,7 +20,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # train random forest classifier
-clf = RandomForestClassifier(n_estimators=100)
+clf = RandomForestClassifier(n_estimators=500, max_features=500)
 clf.fit(X_train, y_train)
 preds = clf.predict(X_test)
 probas = clf.predict_proba(X_test)

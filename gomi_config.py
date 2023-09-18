@@ -1,4 +1,4 @@
-mode = "sozai"
+mode = "normal"
 context = {
     "normal": "{0}",
     "bunbetsu": "{0} のごみの分別",
