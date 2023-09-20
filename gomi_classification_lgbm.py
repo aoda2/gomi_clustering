@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 from gomi_config import mode
-from sklearn.ensemble import RandomForestClassifier
+from lightgbm import LGBMClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score
 import joblib
@@ -21,8 +21,11 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # train random forest classifier
-clf = RandomForestClassifier(n_estimators=500, max_features=500)
-clf.fit(X_train, y_train)
+clf = LGBMClassifier(objective='multiclass',
+                        num_leaves = 23,
+                        learning_rate=0.1,
+                        n_estimators=100)
+clf.fit(X_train, y_train, eval_metric='multi_logloss')
 
 if len(X_test) > 0:
     preds = clf.predict(X_test)
@@ -31,4 +34,4 @@ if len(X_test) > 0:
     report = classification_report(y_test, preds)
     print(report)
 
-joblib.dump(clf, f"output/0133_20230307_model_{mode}.joblib")
+joblib.dump(clf, f"output/0133_20230307_model_{mode}_lgbm.joblib")
