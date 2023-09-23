@@ -1,24 +1,21 @@
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, helpers
 from gomi_config import mode
 import json
 from ast import literal_eval
 import pandas as pd
 
-es = Elasticsearch([{'host': 'localhost', 'port': 9200, 'scheme': 'http', 
-                     'use_ssl': False}])  # Elasticsearchのホストとポートに合わせて変更
+es = Elasticsearch([{'host': 'localhost', 'port': 9200, 'scheme': 'http'}])  # Elasticsearchのホストとポートに合わせて変更
 
 index_name = f'gomi_index_{mode}'  # インデックス名を指定
 
 # インデックスを作成
 index_mapping = {
-    "mappings": {
-        "properties": {
-            "embedding": {
-                "type": "dense_vector",
-                "dims": 1536,
-                "index": True,
-                "similarity": "dot_product" 
-            }
+    "properties": {
+        "embedding": {
+            "type": "dense_vector",
+            "dims": 1536,
+            "index": True,
+            "similarity": "dot_product" 
         }
     }
 }
@@ -31,7 +28,7 @@ except Exception as e:
     print(e)
 
 # インデックス作成
-es.indices.create(index=index_name, body=index_mapping, ignore=400)
+es.indices.create(index=index_name, mappings=index_mapping, ignore=400)
 
 # データ読み込み
 # ファイル読み込み
@@ -55,6 +52,14 @@ def convert_to_json(row):
 # DataFrameの各行をJSONに変換
 json_documents = gomi_embedding.apply(convert_to_json, axis=1)
 
+def bulk_data():
+    # データを格納
+    for document in json_documents:
+        yield {
+            "_op_type": "create",
+            "_index": index_name,
+            "_source": document
+        }
+
 # データを格納
-for document in json_documents:
-    es.index(index=index_name, body=document)
+helpers.bulk(es, bulk_data())
