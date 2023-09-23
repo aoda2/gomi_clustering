@@ -9,7 +9,7 @@ import joblib
 from gomi_config import mode, context
 
 # 入力テキスト
-input = "びん"
+input = "3つの椅子"
 
 # モデル読み込み
 model: RandomForestClassifier = joblib.load(f"output/0133_20230307_model_{mode}.joblib")
