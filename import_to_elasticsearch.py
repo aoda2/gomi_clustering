@@ -15,7 +15,9 @@ index_mapping = {
         "properties": {
             "embedding": {
                 "type": "dense_vector",
-                "dims": 1536
+                "dims": 1536,
+                "index": True,
+                "similarity": "dot_product" 
             }
         }
     }
