@@ -6,10 +6,10 @@ from ast import literal_eval
 from gomi_config import mode
 from sklearn.ensemble import RandomForestClassifier
 import joblib
-from gomi_config import mode, context
+from gomi_config import mode, context, sample_input
 
 # 入力テキスト
-input = "3つの椅子"
+input = sample_input
 
 # モデル読み込み
 model: RandomForestClassifier = joblib.load(f"output/0133_20230307_model_{mode}.joblib")

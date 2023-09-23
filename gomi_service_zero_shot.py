@@ -3,12 +3,11 @@ import pandas as pd
 import numpy as np
 from models import OpenAIModel
 from ast import literal_eval
-from gomi_config import mode
-from gomi_config import mode, context
+from gomi_config import mode, context, sample_input
 from sklearn.metrics.pairwise import cosine_similarity
 
 # 入力テキスト
-input = "3つの椅子"
+input = sample_input
 
 # ファイル読み込み
 gomi_embedding = pd.read_csv(f"output/0133_20230307_embedding_{mode}.csv")

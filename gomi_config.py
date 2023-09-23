@@ -1,4 +1,5 @@
 mode = "normal"
+sample_input = "瓶の蓋（金属製）"
 context = {
     "normal": "{0}",
     "bunbetsu": "{0} のごみの分別",

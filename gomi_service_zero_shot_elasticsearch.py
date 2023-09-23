@@ -1,10 +1,10 @@
 # imports
 from models import OpenAIModel
-from gomi_config import mode, context
+from gomi_config import mode, context, sample_input
 from elasticsearch import Elasticsearch
 
 # 入力テキスト
-input = "分厚い本"
+input = sample_input
 
 
 def cosine_similarity_sort(index_name, query_vector):
@@ -41,8 +41,7 @@ text = context[mode].format(input)
 embedding = open_ai_model.convert_to_vector(text)
 
 # Elasticsearchクライアントの初期化
-es = Elasticsearch([{'host': 'localhost', 'port': 9200, 'scheme': 'http', 
-                     'use_ssl': False}])  # Elasticsearchのホストとポートに合わせて変更
+es = Elasticsearch([{'host': 'localhost', 'port': 9200, 'scheme': 'http'}])  # Elasticsearchのホストとポートに合わせて変更
 
 # クエリ用のベクトルを設定
 query_vector = embedding
