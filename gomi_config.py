@@ -1,5 +1,5 @@
 mode = "normal"
-sample_input = "青汁のペットボトル"
+sample_input = "水筒"
 context = {
     "normal": "{0}",
     "bunbetsu": "{0} のごみの分別",
